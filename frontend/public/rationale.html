@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지리적 가중 평균 기온 산정 근거 | EnergyAI Intelligence</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        h1 { color: #1e3a8a; border-bottom: 3px solid #1e3a8a; padding-bottom: 10px; margin-bottom: 30px; }
+        h2 { color: #1e40af; margin-top: 40px; border-left: 5px solid #3b82f6; padding-left: 15px; }
+        p { font-size: 17px; color: #475569; }
+        .weight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .weight-item {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .weight-item span { display: block; font-size: 14px; color: #64748b; font-weight: 600; }
+        .weight-item strong { font-size: 20px; color: #1e3a8a; }
+        .formula-box {
+            background: #1e3a8a;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 30px 0;
+        }
+        .footer {
+            margin-top: 50px;
+            font-size: 14px;
+            color: #94a3b8;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+        .highlight { color: #2563eb; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>지리적 가중 평균 기온(GWAT) 산정 근거</h1>
+        
+        <h2>1. 도입 배경</h2>
+        <p>대한민국 국가 전력 수요는 지역별 인구 밀도와 산업 집중도에 따라 기상 변화에 대한 민감도가 판이하게 다릅니다. 단순 산술 평균 기온은 <span class="highlight">전국 소비의 약 40%를 차지하는 수도권</span>의 영향력을 과소평가할 위험이 있습니다. 본 시스템은 이를 보완하기 위해 <strong>'지리적 가중 평균 기온(GWAT)'</strong>을 독자적으로 산출하여 모델에 적용했습니다.</p>
+
+        <div class="formula-box">
+            GWAT = Σ (T_i × W_i) / Σ W_i
+        </div>
+        <p style="text-align:center; font-size: 14px;">(T_i: i지역 관측 기온, W_i: i지역 전력 판매 비중 가중치)</p>
+
+        <h2>2. 시·도별 전력 판매량 가중치 (한전 2023 통계 기준)</h2>
+        <p>한국전력공사의 공식 통계자료인 '지역별 전력판매량 비중'을 기준으로 각 관측소에 개별 가중치를 부여했습니다.</p>
+        
+        <div class="weight-grid">
+            <div class="weight-item"><span>경기도 (최대 산업지)</span><strong>23.4%</strong></div>
+            <div class="weight-item"><span>충청남도 (철워/에너지)</span><strong>10.2%</strong></div>
+            <div class="weight-item"><span>서울특별시 (최대 소비지)</span><strong>8.9%</strong></div>
+            <div class="weight-item"><span>경상북도 (국가 산단)</span><strong>8.2%</strong></div>
+            <div class="weight-item"><span>경상남도</span><strong>6.5%</strong></div>
+            <div class="weight-item"><span>전라남도</span><strong>6.4%</strong></div>
+            <div class="weight-item"><span>울산광역시 (중화학)</span><strong>5.9%</strong></div>
+            <div class="weight-item"><span>충청북도</span><strong>5.5%</strong></div>
+            <div class="weight-item"><span>인천광역시</span><strong>4.9%</strong></div>
+            <div class="weight-item"><span>전라북도</span><strong>4.0%</strong></div>
+            <div class="weight-item"><span>부산광역시</span><strong>3.8%</strong></div>
+            <div class="weight-item"><span>강원특별자치도</span><strong>3.1%</strong></div>
+            <div class="weight-item"><span>대구광역시</span><strong>2.7%</strong></div>
+            <div class="weight-item"><span>제주특별자치도</span><strong>1.1%</strong></div>
+        </div>
+
+        <h2>3. 기술적 기대 효과</h2>
+        <p>이러한 가중치 적용을 통해, 인구 밀집 지역의 폭염이나 한파 발생 시 <strong>모델이 전력 수요 급증을 더 민감하고 정확하게 포착</strong>할 수 있게 되었습니다. 이는 공공 데이터 분석에 있어 도메인 지식(한전 통계)이 어떻게 기술적 정밀도로 이어지는지를 보여주는 핵심 사례입니다.</p>
+
+        <div class="footer">
+            © 2026 Public Energy Data Intelligence Lab. 모든 데이터는 한전 및 기상청 공식 자료를 기반으로 합니다.
+        </div>
+    </div>
+</body>
+</html>

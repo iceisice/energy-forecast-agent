@@ -1,0 +1,17 @@
+.env
+venv/
+.venv/
+env/
+__pycache__/
+node_modules/
+target/
+.gradle/
+*.pickle
+*.pkl
+*.shp
+*.shx
+*.dbf
+*.csv
+*.xlsx
+PORTFOLIO_REPORT.md
+대화창구.txt
